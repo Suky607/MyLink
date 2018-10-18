@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cmn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<style>
+body{ font-size:20px; font-family:"楷体";}   
+body,form,input,p{ padding:0; margin:0; border:0;}  
+
+.bg{
+	width:1400px;
+	height:700px;
+	background:url(form_bg.jpg) no-repeat;            /*添加背景图片*/
+	position:relative;                                       /*设置相对定位*/
+	}
+form{
+	width:500px;
+	height:400px;
+	padding-top:20px;
+	margin:60px auto;                      /*使表单在浏览器中居中*/
+	background:#f5f8fd;                    /*为表单添加背景颜色*/
+	border-radius:20px;                    /*设置圆角边框*/ 
+    border:3px solid #4faccb;
+    position:absolute;                    /*设置绝对定位*/
+	left:55%;
+	top:20%;
+} 
+p{
+	margin-top:50px; 
+	text-align:center;
+}  
+p span{
+	width:100px;
+	display:inline-block; 
+	text-align:right;
+	}  
+    .num,.pass,.email{                                   /*对文本框设置共同的宽、高、边框、内边距*/ 
+	width:160px;                                      
+	height:20px;                                 
+	border:1px solid #38a1bf;
+    padding:2px 2px 2px 22px; 
+} 
+.num{                                         /*定义第一个文本框的背景、文本颜色*/
+	 background:url(1.jpg) no-repeat 5px center #FFF;
+	 color:#999;
+}  
+.pass{                                        /*定义第二个文本框的背景*/                                                    
+	 background:url(2.jpg) no-repeat 5px center #FFF;
+}
+.btn01,.btn02{
+	width:65px; 
+	height:35px; 
+	border-radius:3px;                        /*设置圆角边框*/ 
+	border:1px solid #6b5d50; 
+	margin-left:60px;
+	}
+.btn01{ background:#3bb7ea;}                  /*设置第一个按钮的背景色*/   
+.btn02{ background:pink;}     
+
+
+</style>
+
+</head>
+<body>
+   <div class="bg">
+
+    <form action="#" method="post">
+       <p>
+           <span>我的账号：</span>
+           <input type="text" name="suky" value="" class="num" pattern="^[a-zA-Z][a-zA-Z0-9_]{4,15}$"/>
+       </p>
+
+       <p>
+            <span>我的密码：</span>
+            <input type="password" name="pwd" class="pass" pattern="^[a-zA-Z]\w{5,17}$"/>
+       </p>
+	   <p>
+		   <span>电子邮箱：</span>
+		   <input type="email" name="myemail"  class="email" placeholder="" required multiple/>
+		</p>
+       <p>
+            <input type="button" class="btn01" value="登录"/>
+            <input type="button" class="btn02" value="注册"/>
+       </p>
+
+   </form>
+
+   </div>
+   
+</body>
+</html>
