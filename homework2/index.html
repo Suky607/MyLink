@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-cmn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<style>
+
+ /* @media screen and (min-width:700px)        电脑屏幕小化后宽度的大小，最小宽度是700  
+{
+    body{background-color: skyblue;}
+}
+@media screen and (max-width:500px)
+                                          检查代码，左上角的手机端的最大宽度是500 
+{
+    body{background-color: pink;}
+}
+@media (min-width: 540px) and (max-width: 960px)
+                                                 检查代码，左上角的手机端的最大宽度是960是蓝色，小的是下面的显示颜色 
+{
+	body{background: lightsteelblue;}
+		
+}  */
+/* header{
+		width: 300%;
+		min-width: 400px;
+		max-width: 800px;
+		height: 600px;
+		background:pink;
+		margin:100px auto;
+    }
+    section{
+		width: 33.3333%;
+		height: 500px;
+		float:left;
+		background: skyblue;
+    }
+    section:first-child{
+		background: lightgreen;
+	}
+    section:last-child{
+		background: palevioletred;
+	} */
+
+div{
+		width: 50%;
+		height: 300px;
+		background: pink;
+		margin:100px auto;
+		position: relative;
+	}
+    aside,article{
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+    aside{
+		width: 300px;
+		height: 300px;
+		background: skyblue;
+		z-index:2;
+	}
+    article{
+		height: 300px;
+		width: 90%;
+		background: paleturquoise;
+		z-index:1;
+		padding: 30px;
+	}
+    p{
+		margin-left:300px;
+	}
+
+
+</style>
+</head>
+<body>
+    <!-- <header>
+        <section></section>
+        <section></section>
+        <section></section>
+    </header> -->
+<div>
+    <aside></aside>
+    <article>
+
+<p>
+	1111111 1 111 11111122222 22222 2222  333333   333333333
+</p>
+
+    </article>
+</div>
+
+</body>
+</html>
