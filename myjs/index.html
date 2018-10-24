@@ -17,6 +17,9 @@
         color: white;
         padding: 3px;
       }
+      div.resultParas p:last-child{
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -26,8 +29,8 @@
     <p>我刚才随机选定了一个100以内的自然数。看你能否在 10 次以内猜中它。每次我都会告诉你所猜的结果是高了还是低了。</p>
     <!-- 猜数交互区开始 -->
     <div class="form">
-      <label for="guessField">请猜数: </label><input type="text" id="guessField" class="guessField" value="123" >
-      <input type="submit" value="确定" class="guessSubmit" onclick="checkGuess()">
+      <label for="guessField">请猜数: </label><input type="text" id="guessField" class="guessField" >
+      <input type="submit" value="确定" class="guessSubmit"  >
     </div>
     <!-- 猜数交换区结束 -->
     <!-- 结果呈现区开始 -->
@@ -35,10 +38,11 @@
       <p class="guesses"></p> <!--猜数历史数据存放区-->
       <p class="lastResult"></p><!--猜对/错结论区-->
       <p class="lowOrHi"></p><!--猜高/低提示-->
+      <p><button>重新开始</button></p>
     </div>
     <!-- 结果呈现区结束 -->
     <!-- 重新游戏按钮由JS动态加入 -->
     <!-- <script src="js/game.js"></script> -->
-    <script src="js/mygame.js"></script>
+    <script src="mygame.js"></script>
   </body>
 </html>
