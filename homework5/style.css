@@ -189,19 +189,23 @@ span{
 .txt-box:hover{
     height: 40px;
 }
-
-.txt-box li{
+.txtItem{
     width: 12.5%;
-    background-color: #333;
+    /* background-color: #333; */
     margin-right: 2px;
     color: #fff;
     text-align: center;
 }
 
-.txt-box li:hover{
-    background-color:orange;
+.txtItem:hover,.heighlightColor{
+
+    /* background-color:rgb(252, 166, 5,);   */
+    background-color: skyblue; 
 }
 
-.txt-box :last-child{
+.txtItem:last-child{
     margin: 0;
+}
+.normalColor{
+background-color: rgba(0,0,0,0.5);
 }

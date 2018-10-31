@@ -11,6 +11,12 @@
 
 //获取一组带超链接的图像
 var imagesA=document.getElementById("images").children;
+
+//获取一组文本
+var txtList=document.querySelectorAll(".txt-box>li")
+
+
+
 // console.log(imagesA);
 
 
@@ -25,20 +31,23 @@ var currentNo=0;
 function changeImg()
 {
 //排他原理，先去掉同类，再突出自己
+// for(var i=0;i<imagesA.length;i++)
+// {
+//     imagesA[i].className="hiddenImg";
+//     txtList[i].className="txtItem normalColor";
 
-  for(var i=0;i<imagesA.length;i++)
-  {
-      imagesA[i].className="hiddenImg";
-    //   console.log(imagesA[i]);
-  }
+  
+ 
+
     //再突出自己
-    imagesA[currentNo].className="displayImg"
+    // imagesA[currentNo].className="displayImg";
+    // txtList[currentNo].className="txtItem heighlightColor";
 
     //换个元素，为下一个计时器调用做准备
     if(currentNo<7){currentNo++;}
     else{currentNo=0;}
 
-    // console.log(currentNo);
+     console.log(currentNo);
 
 }
 var timer=window.setInterval(changeImg,1000)
@@ -53,7 +62,68 @@ function startChange()
 {
     timer=window.setInterval(changeImg,1000);
 }
-var imagesDiv=document.getElementById("images");
-console.log(imagesDiv);
-imagesDiv.addEventListener('mouseover',stopChange);
-imagesDiv.addEventListener('mouseout',startChange);
+var sliderDiv=document.querySelector(".slider");
+
+// console.log(sliderDiv);
+sliderDiv.addEventListener('mouseover',stopChange);
+sliderDiv.addEventListener('mouseout',startChange);
+
+
+// 为所有文本Li注册鼠标移入事件，移入之后，当前li的高亮，跳转到对应的图片
+
+for(var i=0;i<txtList.length;i++)
+{
+    txtList[i].addEventListener('mouseover',gotoImg);
+    txtList[i].no=i;
+    // console.log(txtList[i].no);
+
+}
+function gotoImg()
+{
+//获取当前显示图像的编号/文本编号  this是当前事件发生的文体
+//  console.log(this.no);
+ currentNo=this.no;
+ changeImg();
+}
+
+var leftButton=document.querySelector('.leftButton');
+var rigetButton=document.querySelector('.rigetButton');
+
+leftButton.addEventListener('click',leftImg);
+rigetButton.addEventListener('click',rightImg);
+
+
+function leftImg(){
+
+    for(var i=0;i<imagesA.length;i++)
+    {
+        imagesA[i].className="hiddenImg";
+        txtList[i].className="txtItem normalColor";
+  
+      //   console.log(imagesA[i]);
+    }
+    if(currentNo>0)
+    {
+        currentNo--;
+    }
+    else
+    {
+        currentNo=7;
+    }
+    imagesA[currentNo].className="displayImg";
+    txtList[currentNo].className="txtItem heighlightColor";
+
+}
+function rightImg()
+{
+    if(currentNo<7)
+    {
+        currentNo++;
+    }
+    else
+    {
+        currentNo=0;
+    }
+    console.log(currentNo);
+    changeImg();
+}
