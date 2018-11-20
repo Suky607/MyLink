@@ -1,0 +1,151 @@
+<script>
+  // function Person(name, age) {
+  //   this.name = name;                // 添加name属性
+  //   this.age = age;                  // 添加age属性
+  //   this.sayHello = function () {    // 添加sayHello()方法
+  //     console.log('你好，我是' + this.name);
+  //   };
+  // }
+  // var p1 = new Person('张三', 18);
+  // var p2 = new Person('李四', 19);
+  // console.log(p1);                  // 输出结果：Person {name: "张三", age: 18}
+  // console.log(p2);                  // 输出结果：Person {name: "李四", age: 19}
+  // p1.sayHello();                    // 输出结果：你好，我是 张三
+  // console.log(p1.constructor);      // 输出结果：function Person(name, age) ……
+
+
+
+  // // 定义类---ES6新增
+  // class Student {
+  //   //仅属性使用构造函数
+  //   constructor(name, age, gender) {    // 构造方法
+  //     this.name = name;                  // 添加name属性
+  //     this.age = age;                    // 添加age属性
+  //     this.gender = gender;              // 添加gender属性
+  //   }
+  //   //函数独立列出，不用function关键字
+  //   introduce() {                        // 定义introduce()方法
+  //     console.log('我是' + this.name + '，今年' + this.age + '岁。');
+  //   }
+  // }
+  // // 实例化时会自动调用constructor()构造方法
+  // var st = new Student('王五', 19, '男');
+  // st.introduce();    // 输出结果：我是王五，今年19岁。
+
+
+
+  //商品类
+  class Product {
+    constructor(id, title, price, imgSrc) {
+      // 商品类的成员
+      this.id = id;
+      this.title = title;
+      this.price = price;
+      this.imgSrc = imgSrc;
+    }
+  }
+
+
+
+  // 订单列表2
+  class Order {
+    constructor(product, cont) {
+      this.id = product.id;
+      this.title = product.title;
+      this.price = product.price;
+      this.imgSrc = product.imgSrc;
+      this.cont = cont;
+    }
+  }
+  // 创建订单对象
+  // var order = new Order(product1, 5);
+  // console.log(order);
+  // var order2 = new Order(product2, 4);
+  // console.log(order2);
+
+  // 数组
+  // var stList = new Array();
+  // stList.push(product1);
+  // console.log(stList[0].id);
+
+  // console.log(stList);
+  // var array = [new Product('01', '30片巨补水 秋冬新款面膜', 99.99, 'images/01.jpg'), new Product('01', '飞机', 9.90, 'images/02.jpg')]
+  // console.log(array[1].id);
+  // console.log(array);
+
+
+  // 购物车数据类
+  class CartDate {
+    constructor() {
+      this.orderList = new Array();
+      this.units = 0;
+      this.totalQty = 0;
+      this.totalAmount = 0
+    }
+  }
+
+
+  //  var myCart=new CartDate();
+  // order=new Order(product1,3)
+  //  myCart.orderList.push(order);
+  function addtoCart(order) {
+    var flag = true;//假设当前状态是新商品
+    for (const i in myCart.orderList) {
+      if (order.id == myCart.orderList[i].id) {
+        flag = false;//修改状态，是老商品
+        myCart.orderList[i].cont += order.cont;//新增对应的数量cont
+        break;
+      }
+    }
+    if (flag) {//新商品，order是购物车中的新商品，给样本数++
+      myCart.orderList.push(order);
+      myCart.units++;
+    }
+    myCart.totalQty += order.cont;
+    myCart.totalAmount += order.price * order.cont;
+  }
+  // 商品对象/实例
+  var product1 = new Product('01', '面膜', 300.50, 'images/01.jpg');
+  var product2 = new Product('02', '飞机', 200.50, 'images/02.jpg');
+
+  var order = new Order(product1, 5);
+  //  实例化购物车数据----订单1进购物车
+  var myCart = new CartDate();
+  myCart.orderList.push(order);
+  myCart.units = 1;
+  myCart.totalQty = order.cont;
+  myCart.totalAmount = order.price * order.cont;
+  console.log(myCart);
+
+  order = new Order(product2, 3);
+  addtoCart(order);//调用加入购物车函数
+  console.log(myCart);
+
+  order = new Order(product2, 1);
+  addtoCart(order);//调用加入购物车函数
+  console.log(myCart);
+
+
+// 创建订单对象
+var order1=new Order(product1,5);
+console.log(order1);
+
+var x=10;
+var y=5;
+
+localStorage.setItem('kx',x);
+var xfromS=localStorage.getItem('kx');
+console.log(xfromS*y);
+console.log(parseInt(xfromS)+y);
+console.log(parseFloat(xfromS)+y);
+
+// js对象---》json对象字符串
+// json对象字符串--》json对象
+
+localStorage.setItem('p01',JSON.stringify(product1));
+var pfromS=JSON.parse(localStorage.getItem('p01'));
+console.log(pfromS);
+
+
+
+</script>
