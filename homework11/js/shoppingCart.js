@@ -175,7 +175,7 @@ class ShoppingCart {
   find(id, orderList) {
     for (const i in orderList) {
       if (id == orderList[i].id) {
-        console.log(orderList[i]);
+        // console.log(orderList[i]);
         return orderList[i];
       }
     }
@@ -208,9 +208,30 @@ class ShoppingCart {
     }
   }
   //减少/增加指定商品的数量（+1或者-1）
-  changeQty(id, op) {
-
+  changeQty(id, a) {
+    let cartData = this.getDataFromLocalStorage();//获取购物车数据
+    // console.log(cartData);
+    for (let i = 0; i < cartData.orderList.length; i++) {
+      if (id == cartData.orderList[i].id) {
+        if (a == '-') {
+          cartData.orderList[i].qty--;
+          cartData.totalQty--;
+          cartData.totalAmount -= cartData.orderList[i].price;
+          if (cartData.orderList[i].qty == 0) {
+            cartData.orderList.splice(i, 1);
+            cartData.units--;
+          }
+        } if (a == '+') {
+          cartData.orderList[i].qty++;
+          cartData.totalQty++;
+          cartData.totalAmount += cartData.orderList[i].price;
+        }
+      }
+    }
+    this.setDataToLocalSatorge(cartData);
   }
+
 }
+
 
 

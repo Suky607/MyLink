@@ -24,7 +24,7 @@
         // var title = order.title;
         // console.log(title);
         //购物车数据
-        //  var cartData = new CartData();
+        // var cartData = new CartData();
         //将订单加入购物车
         // cartData.orderList.push(order);
         // cartData.totalQty = order.qty;
@@ -58,11 +58,15 @@
         console.log(cart.getSelectedQty());
         console.log(cart.getSelectedAmount());
 
-        cart.setItemSelectStatus('03', true);
-        console.log(cart.getSelectedQty());
-        console.log(cart.getSelectedAmount());
+        //cart.setItemSelectStatus('03', true);
+        // console.log(cart.getSelectedQty());
+        // console.log(cart.getSelectedAmount());
 
-         cart.deleteItem('03');
+       cart.changeQty("02",'+') ;
+
+
+
+        cart.deleteItem('03');
 
 
     </script>

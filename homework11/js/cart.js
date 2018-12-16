@@ -8,27 +8,30 @@ var cartListNode = document.querySelector('#cartContent');
 //定义一组字符串命名规则-JSON
 // 数据
 const dataNameJson =
-    {
-        "price": "[data-name='price']",
-        "qty": "[data-name='qty']",
-        "imgSrc": '[data-name="imgSrc"]',
-        "subPrice": '[data-name="subPrice"]',
-        "selectedQty": '[data-name="selectedQty"]',
-        "selectedAmount": '[data-name="selectedAmount"]',
-        "units": '[data-name="units"]'
-    };
+{
+    "price": "[data-name='price']",
+    "qty": "[data-name='qty']",
+    "imgSrc": '[data-name="imgSrc"]',
+    "subPrice": '[data-name="subPrice"]',
+    "selectedQty": '[data-name="selectedQty"]',
+    "selectedAmount": '[data-name="selectedAmount"]',
+    "units": '[data-name="units"]'
+};
 //订单操作
 const operatorNameJson =
-    {
-        "checkItem": "[data-operator='checkItem']",
-        "increase": "[data-operator='increase']",
-        "decrease": "[data-operator='decrease']",
-        "deleteItem": "[data-operator='deleteItem']"
-    };
+{
+    "checkItem": "[data-operator='checkItem']",
+    "increase": "[data-operator='increase']",
+    "decrease": "[data-operator='decrease']",
+    "deleteItem": "[data-operator='deleteItem']",
+    "deleteSelected": "[data-operator='deleteSelected']"
+
+};
 
 // 全局操作
 const operatorGlobal = {
-    "clearAll": "[data-operator='clearAll']"
+    "clearAll": "[data-operator='clearAll']",
+    "selectAll": "[data-operator='selectAll']"
 }
 // console.log(cart);
 
@@ -129,12 +132,53 @@ function regEvent() {
 
     //获取一组订单删除按钮
     element = cartRoot.querySelectorAll(operatorNameJson.deleteItem);
-    // console.log(element);
+    //console.log(element);
     //为每一个删除按钮设计单击事件—触发
     for (const i in element) {
-        element[i].onclick =deleteItemEventFun ;
+        element[i].onclick = deleteItemEventFun;
     }
 
+
+    // 获取删除选中订单节点
+    element = cartRoot.querySelector(operatorNameJson.deleteSelected);
+    //console.log(element);
+    // 为"删除选中的商品"节点注册单机事件,事件触发函数
+    element.onclick = deleteSelectedOrder;
+
+
+
+    // 获取所有+号节点
+    element = cartRoot.querySelectorAll(operatorNameJson.increase);
+    //  console.log(element);
+    // 为每个+号节点注册单机事件,事件触发函数
+    for (const i in element) {
+        element[i].onclick = changeQty;
+    }
+    // 获取所有-号节点
+    element = cartRoot.querySelectorAll(operatorNameJson.decrease);
+    //  console.log(element);
+    // 为每个-号节点注册单机事件,事件触发函数
+    for (const i in element) {
+        element[i].onclick = changeQty;
+    }
+
+
+    // 获取所有订单复选框节点
+    element = document.querySelectorAll(operatorNameJson.checkItem);
+    //  console.log(element);
+    // 为每个订单复选框节点注册单机事件,事件触发函数
+    for (const i in element) {
+        element[i].onclick = checkItemFun;
+    }
+
+        // 获取全选节点
+        element = cartRoot.querySelectorAll(operatorGlobal.selectAll);
+        //  console.log(element);
+        // 为全选节点注册单机事件,事件触发函数
+        for (const i in element) {
+            element[i].onclick = selectAllFun;
+        }
+    
 
 }
 // 清空事件触发函数
@@ -150,10 +194,122 @@ function clearAllEventFun() {
     // 更新商品总数据
     displaySelectedTotal();
 }
+//加减事件触发函数
+function changeQty() {
 
+    //获取订单根节点
+    //获取获取当前订单节点
+    let node = this.parentNode.parentNode.parentNode;
+
+    // 获取当前订单数量节点
+    let qtyNode = node.querySelector(dataNameJson.qty);
+    // console.log(qtyNode);
+
+    // 获取当前订单数量
+    let qty = parseInt(qtyNode.textContent);
+    //  console.log(qty);
+
+    // 获取当前操作是+号还是-号
+    let AddOrMinus = this.textContent;
+    // console.log(AddOrMinus);
+
+    // 获取当前订单的id
+    let id = node.id;
+    // console.log(id);
+
+    // 获取当前订单的小计
+    let subPrice = node.querySelector(dataNameJson.subPrice);
+    // console.log(subPrice);
+    // 获取当前订单的单价
+    let PriceNode = node.querySelector(dataNameJson.price);
+    // console.log(PriceNode);
+
+    // 订单数量加或减
+    if (AddOrMinus == '+') {
+        qty++;
+    } else {
+        qty--;
+        if (qty <= 0) { qty = 1; return; }
+    }
+    // 修改页面订单数量
+    qtyNode.textContent = qty;
+    // 调用指定某个订单数量加1/减1的方法
+    cart.changeQty(id, AddOrMinus);
+    // 修改小计
+    subPrice.textContent = (qtyNode.textContent * PriceNode.textContent).toFixed(2);
+    // 修改商品的总数和总价格
+    displaySelectedTotal();
+}
+
+// 删除选中订单事件触发函数
+function deleteSelectedOrder() {
+    // 获取所有订单的复选框
+    let checkItems = document.querySelectorAll('[data-operator="checkItem"]');
+    //  console.log(checkItems);
+    // 定义id数组储存状态为选中的订单的id
+    let idArray = new Array();
+    // 向id数组添加元素
+    for (let i = 1; i < checkItems.length; i++) {
+        // console.log(checkItems[i].checked);
+        if (checkItems[i].checked) {
+            idArray.push((checkItems[i].parentNode.parentNode).id);
+        }
+    }
+    //    console.log(idArray);
+    for (const i in idArray) {
+        // 调用购物车类删除订单函数
+        id = idArray[i];
+        cart.deleteItem(id);
+        // 获取订单根节点
+        var cartListNode = document.querySelector('#cartContent');
+        // 获取要删除的订单节点
+        let node = cartListNode.querySelector('[id="' + id + '"]');
+        console.log(node);
+        // 删除节点
+        cartListNode.removeChild(node);
+    }
+    // 修改各种总数据
+    displaySelectedTotal();
+}
+
+// // 订单复选框触发函数
+function checkItemFun() {
+    //     // 获取“全选复选框”节点
+    let cheselectAlls = document.querySelectorAll('[data-operator="selectAll"]');
+    // console.log(cheselectAlls);
+
+    // 获取当前订单节点
+    let node = this.parentNode.parentNode;
+
+    // 获取当前订单id
+    let id = node.id;
+    // console.log(id);
+    // 获取当前订单的选择状态
+    let selectStatus = this.checked;
+    // console.log(selectStatus);
+
+    // 调用“设置购物订单项选择状态”方法
+    cart.setItemSelectStatus(id, selectStatus);
+
+    // 设置全选状态
+    if (selectStatus == false) {
+        for (const key in cheselectAlls) {
+            cheselectAlls[key].checked = false;
+        }
+    } else {
+        // getDataFromLocalStorage
+        // 当选中商品的总数量=购物车数据的总件数时，“全选”复选框状态为选中
+        if (cart.getSelectedQty() == cart.getDataFromLocalStorage().totalQty) {
+            for (const key in cheselectAlls) {
+                cheselectAlls[key].checked = true;
+            }
+        }
+    }
+    // 修改商品的总数和总价格
+    displaySelectedTotal();
+}
 // //删除事件触发函数
 function deleteItemEventFun(e) {
-    // console.log(e);
 
     // 获取订单根节点
     //获取获取当前被单击的删除按钮
@@ -169,6 +325,28 @@ function deleteItemEventFun(e) {
     displaySelectedTotal();
 
 }
+function selectAllFun(e) {
+    // 获取“全选“复选框节点
+    let cheselectAlls = document.querySelectorAll('[data-operator="selectAll"]');
+    //  console.log(cheselectAlls);
+    // 获取所有订单复选框节点
+    let checkItems = document.querySelectorAll('[data-operator="checkItem"]');
+    // 设置所有“全选”复选框的状态同步
+    for (const key in cheselectAlls) {
+        cheselectAlls[key].checked = e.target.checked;
+    }
+    // 设置所有订单的状态与“全选”复选框的状态同步
+    for (let i=1;i<checkItems.length;i++) {
+        // 获取订单id
+        let id=(checkItems[i].parentNode.parentNode).id;
+        // 将“全选”复选框的状态赋值给订单
+        checkItems[i].checked=e.target.checked;
+        // 调用“设置购物订单项选择状态”方法
+        cart.setItemSelectStatus(id,e.target.checked);
+    }
+    // 修改商品的总数和总价格
+    displaySelectedTotal();
+}
 
 function init() {
     //显示订单列表
@@ -177,7 +355,7 @@ function init() {
     displaySelectedTotal();
     //为相关节点注册事件
     regEvent();
-   
+
 }
 //调用初始化函数
 init();
